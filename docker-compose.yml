@@ -1,14 +1,15 @@
+version: '3.8'
+
 services:
-  reminder:
+  telegram-bot:
     build: .
-    container_name: reminder-bot
-    restart: unless-stopped
+    container_name: reminder_bot
     env_file: .env
     volumes:
-      - ./data:/app/data      # База данных
-      - ./models:/app/models  # Модель распознавания
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
+      - ./app/data:/app/data          # для SQLite БД
+      - ./app/models:/app/models      # для кэширования модели Whisper
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2G                  # ограничиваем память (Whisper может жрать много)
