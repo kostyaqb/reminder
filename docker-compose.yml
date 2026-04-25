@@ -1,16 +1,15 @@
-version: '3.8'
-
 services:
   telegram-bot:
     build: .
     container_name: reminder_bot
     env_file: .env
     volumes:
-      # Слева - путь на хосте (ваша ВМ), Справа - путь внутри контейнера (должен начинаться с /)
-      - ./app/data:/app/data
-      - ./app/models:/app/models
+      - data-volume:/app/data
+      - model-volume:/app/models
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 1G
+
+volumes:
+  data-volume:
+    driver: local
+  model-volume:
+    driver: local
