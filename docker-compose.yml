@@ -4,12 +4,10 @@ services:
     container_name: reminder_bot
     env_file: .env
     volumes:
-      - data-volume:/app/data
-      - model-volume:/app/models
+      - bot-data:/app/data
+      - bot-models:/app/models
     restart: unless-stopped
 
 volumes:
-  data-volume:
-    driver: local
-  model-volume:
-    driver: local
+  bot-data:
+  bot-models:
